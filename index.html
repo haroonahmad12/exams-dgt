@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DGT Exam Practice Platform</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Language Selection & Home Screen -->
+      <div id="homeScreen" class="screen active">
+        <div class="home-content">
+          <div class="logo">
+            <h1>DGT Exam Practice</h1>
+            <p class="subtitle">Practice Spanish Driving Tests</p>
+          </div>
+
+          <div class="language-selection">
+            <h2>Select Language</h2>
+            <div class="language-buttons">
+              <button class="lang-btn" data-lang="E">
+                <span class="flag">🇬🇧</span>
+                <span>English</span>
+              </button>
+              <button class="lang-btn" data-lang="S">
+                <span class="flag">🇪🇸</span>
+                <span>Español</span>
+              </button>
+              <button class="lang-btn" data-lang="R">
+                <span class="flag">🇷🇺</span>
+                <span>Русский</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h3>How it works</h3>
+            <ul>
+              <li>📋 30 random questions per exam</li>
+              <li>✅ Answer each question carefully</li>
+              <li>📊 Pass if you have 3 or fewer incorrect answers</li>
+              <li>📚 Review explanations after completing the exam</li>
+            </ul>
+          </div>
+
+          <button id="startBtn" class="btn btn-primary" disabled>
+            Start Practice Exam
+          </button>
+
+          <div class="stats-section">
+            <h3>Your Statistics</h3>
+            <div class="stats-grid">
+              <div class="stat-box">
+                <span class="stat-label">Total Exams</span>
+                <span class="stat-value" id="totalExams">0</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-label">Passed</span>
+                <span class="stat-value passed" id="passedExams">0</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-label">Failed</span>
+                <span class="stat-value failed" id="failedExams">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exam Screen -->
+      <div id="examScreen" class="screen">
+        <div class="exam-header">
+          <div class="progress-section">
+            <span class="question-counter">
+              Question <span id="currentQuestion">1</span> of
+              <span id="totalQuestions">30</span>
+            </span>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+          <button id="exitBtn" class="btn btn-secondary btn-small">Exit</button>
+        </div>
+
+        <div class="exam-content">
+          <!-- Question Image -->
+          <div
+            id="questionImageContainer"
+            class="question-image-container"
+            style="display: none"
+          >
+            <img
+              id="questionImage"
+              src=""
+              alt="Question Image"
+              class="question-image"
+            />
+          </div>
+
+          <!-- Question Text -->
+          <div id="questionText" class="question-text"></div>
+
+          <!-- Answer Options -->
+          <div id="answersContainer" class="answers-container"></div>
+
+          <!-- Navigation Buttons -->
+          <div class="navigation-buttons">
+            <button id="prevBtn" class="btn btn-secondary">← Previous</button>
+            <button id="nextBtn" class="btn btn-primary">Next →</button>
+          </div>
+
+          <!-- Question Status Indicators -->
+          <div class="question-status">
+            <div class="answered-indicator">
+              <span id="answeredCount">0</span> of
+              <span id="totalForStatus">30</span> answered
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Screen -->
+      <div id="resultsScreen" class="screen">
+        <div class="results-content">
+          <div class="results-header">
+            <h2 id="resultTitle"></h2>
+            <div id="resultBadge" class="result-badge"></div>
+          </div>
+
+          <div class="results-stats">
+            <div class="result-stat">
+              <span class="label">Total Questions</span>
+              <span class="value">30</span>
+            </div>
+            <div class="result-stat">
+              <span class="label">Correct Answers</span>
+              <span class="value correct" id="correctCount">0</span>
+            </div>
+            <div class="result-stat">
+              <span class="label">Incorrect Answers</span>
+              <span class="value incorrect" id="incorrectCount">0</span>
+            </div>
+            <div class="result-stat">
+              <span class="label">Score</span>
+              <span class="value" id="scorePercentage">0%</span>
+            </div>
+          </div>
+
+          <div class="results-message" id="resultMessage"></div>
+
+          <div class="review-button-group">
+            <button id="reviewBtn" class="btn btn-primary">
+              Review Answers
+            </button>
+            <button id="restartBtn" class="btn btn-secondary">
+              Start New Exam
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review Screen -->
+      <div id="reviewScreen" class="screen">
+        <div class="review-header">
+          <div class="progress-section">
+            <span class="question-counter">
+              Question <span id="reviewCurrentQuestion">1</span> of
+              <span id="reviewTotalQuestions">30</span>
+            </span>
+            <div class="progress-bar">
+              <div class="progress-fill" id="reviewProgressFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-content">
+          <!-- Question Image -->
+          <div
+            id="reviewQuestionImageContainer"
+            class="question-image-container"
+            style="display: none"
+          >
+            <img
+              id="reviewQuestionImage"
+              src=""
+              alt="Question Image"
+              class="question-image"
+            />
+          </div>
+
+          <!-- Question Text -->
+          <div id="reviewQuestionText" class="question-text"></div>
+
+          <!-- User's Answer -->
+          <div id="reviewUserAnswerSection" class="review-answer-section">
+            <h4>Your Answer</h4>
+            <div id="reviewUserAnswer" class="review-answer-display"></div>
+          </div>
+
+          <!-- Correct Answer (if different) -->
+          <div
+            id="reviewCorrectAnswerSection"
+            class="review-answer-section"
+            style="display: none"
+          >
+            <h4>Correct Answer</h4>
+            <div id="reviewCorrectAnswer" class="review-answer-display"></div>
+          </div>
+
+          <!-- Explanation -->
+          <div id="reviewExplanationSection" class="review-explanation-full">
+            <h4>Explanation</h4>
+            <div id="reviewExplanation"></div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="navigation-buttons">
+            <button id="reviewPrevBtn" class="btn btn-secondary">
+              ← Previous
+            </button>
+            <button id="reviewNextBtn" class="btn btn-primary">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
