@@ -3,129 +3,244 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Practice for the Spanish DGT driving theory exam with interactive tests in English, Spanish, and Russian." />
+    <meta name="theme-color" content="#667eea" />
     <title>DGT Exam Practice Platform</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+    
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <div class="container">
-      <!-- Language Selection & Home Screen -->
-      <div id="homeScreen" class="screen active">
+      <!-- ============================================================
+           HOME SCREEN
+           ============================================================ -->
+      <div id="homeScreen" class="screen active" role="main" id="main-content">
         <div class="home-content">
+          <!-- App Header with Language & Theme -->
+          <div class="app-header">
+            <div class="logo-small">
+              <span class="logo-icon">🚗</span>
+            </div>
+            <div class="header-controls">
+              <!-- App Language Selector -->
+              <div class="app-lang-selector" id="appLangSelector">
+                <button class="app-lang-btn" id="appLangBtn" aria-label="Change app language">
+                  <span class="app-lang-flag" id="appLangFlag">🇪🇸</span>
+                  <span class="app-lang-code" id="appLangCode">ES</span>
+                  <span class="app-lang-arrow">▼</span>
+                </button>
+                <div class="app-lang-dropdown hidden" id="appLangDropdown">
+                  <button class="app-lang-option" data-lang="es">
+                    <span>🇪🇸</span> Español
+                  </button>
+                  <button class="app-lang-option" data-lang="en">
+                    <span>🇬🇧</span> English
+                  </button>
+                </div>
+              </div>
+              <!-- Theme Toggle -->
+              <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="icon" id="themeIcon">🌙</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Logo -->
           <div class="logo">
-            <h1>DGT Exam Practice</h1>
-            <p class="subtitle">Practice Spanish Driving Tests</p>
+            <h1 data-i18n="appTitle">DGT Exam Practice</h1>
+            <p class="subtitle" data-i18n="appSubtitle">Master the Spanish Driving Theory Test</p>
           </div>
 
+          <!-- Language Selection for Exam -->
           <div class="language-selection">
-            <h2>Select Language</h2>
-            <div class="language-buttons">
-              <button class="lang-btn" data-lang="E">
-                <span class="flag">🇬🇧</span>
+            <h2 data-i18n="selectLanguage">Select Exam Language</h2>
+            <div class="language-buttons" role="group" aria-label="Language selection">
+              <button class="lang-btn" data-lang="E" aria-pressed="false">
+                <span class="flag" aria-hidden="true">🇬🇧</span>
                 <span>English</span>
               </button>
-              <button class="lang-btn" data-lang="S">
-                <span class="flag">🇪🇸</span>
+              <button class="lang-btn" data-lang="S" aria-pressed="false">
+                <span class="flag" aria-hidden="true">🇪🇸</span>
                 <span>Español</span>
               </button>
-              <button class="lang-btn" data-lang="R">
-                <span class="flag">🇷🇺</span>
+              <button class="lang-btn" data-lang="R" aria-pressed="false">
+                <span class="flag" aria-hidden="true">🇷🇺</span>
                 <span>Русский</span>
               </button>
             </div>
           </div>
 
+          <!-- Info Section -->
           <div class="info-section">
-            <h3>How it works</h3>
+            <h3 data-i18n="howItWorks">How it works</h3>
             <ul>
-              <li>📋 30 random questions per exam</li>
-              <li>✅ Answer each question carefully</li>
-              <li>📊 Pass if you have 3 or fewer incorrect answers</li>
-              <li>📚 Review explanations after completing the exam</li>
+              <li><span aria-hidden="true">📋</span> <span data-i18n="info1">30 random questions per exam</span></li>
+              <li><span aria-hidden="true">⏱️</span> <span data-i18n="info2">30 minutes to complete (like the real test)</span></li>
+              <li><span aria-hidden="true">✅</span> <span data-i18n="info3">Pass with 3 or fewer incorrect answers</span></li>
+              <li><span aria-hidden="true">📚</span> <span data-i18n="info4">Review detailed explanations after each exam</span></li>
             </ul>
           </div>
 
-          <button id="startBtn" class="btn btn-primary" disabled>
-            Start Practice Exam
+          <!-- Start Button -->
+          <button id="startBtn" class="btn btn-primary btn-large" disabled aria-describedby="start-hint">
+            <span aria-hidden="true">🚀</span>
+            <span data-i18n="startExam">Start Practice Exam</span>
           </button>
+          <p id="start-hint" class="sr-only" data-i18n="startHint">Select a language first to enable this button</p>
 
+          <!-- Statistics Section -->
           <div class="stats-section">
-            <h3>Your Statistics</h3>
+            <h3 data-i18n="yourStats">Your Statistics</h3>
             <div class="stats-grid">
               <div class="stat-box">
-                <span class="stat-label">Total Exams</span>
+                <span class="stat-icon" aria-hidden="true">📊</span>
+                <span class="stat-label" data-i18n="totalExams">Total Exams</span>
                 <span class="stat-value" id="totalExams">0</span>
               </div>
               <div class="stat-box">
-                <span class="stat-label">Passed</span>
+                <span class="stat-icon" aria-hidden="true">🏆</span>
+                <span class="stat-label" data-i18n="passed">Passed</span>
                 <span class="stat-value passed" id="passedExams">0</span>
               </div>
               <div class="stat-box">
-                <span class="stat-label">Failed</span>
+                <span class="stat-icon" aria-hidden="true">📉</span>
+                <span class="stat-label" data-i18n="failed">Failed</span>
                 <span class="stat-value failed" id="failedExams">0</span>
               </div>
             </div>
           </div>
+
+          <!-- Exam History Section -->
+          <div class="history-section" id="historySection">
+            <div class="history-header">
+              <h3><span aria-hidden="true">📜</span> <span data-i18n="recentExams">Recent Exams</span></h3>
+              <button class="btn btn-ghost btn-small" id="clearHistoryBtn" aria-label="Clear all exam history" data-i18n="clearAll">
+                Clear All
+              </button>
+            </div>
+            <div class="history-list" id="historyList" role="list">
+              <!-- History items will be dynamically inserted here -->
+            </div>
+            <div class="history-empty" id="historyEmpty">
+              <div class="history-empty-icon" aria-hidden="true">📭</div>
+              <p data-i18n="noHistory">No exam history yet. Start your first practice exam!</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Exam Screen -->
-      <div id="examScreen" class="screen">
+      <!-- ============================================================
+           EXAM SCREEN
+           ============================================================ -->
+      <div id="examScreen" class="screen" role="main" aria-label="Exam in progress">
         <div class="exam-header">
-          <div class="progress-section">
-            <span class="question-counter">
-              Question <span id="currentQuestion">1</span> of
-              <span id="totalQuestions">30</span>
-            </span>
-            <div class="progress-bar">
-              <div class="progress-fill" id="progressFill"></div>
+          <div class="exam-header-left">
+            <!-- Timer -->
+            <div class="exam-timer-container" id="timerContainer" aria-live="polite" aria-atomic="true">
+              <span class="timer-icon" aria-hidden="true">⏱️</span>
+              <span class="timer-value" id="timerValue">30:00</span>
+            </div>
+            
+            <!-- Progress -->
+            <div class="progress-section">
+              <span class="question-counter">
+                Question <span id="currentQuestion">1</span> of
+                <span id="totalQuestions">30</span>
+              </span>
+              <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <!-- Question Navigation Dots -->
+              <div class="question-dots" id="questionDots" role="navigation" aria-label="Question navigation">
+                <!-- Dots will be generated dynamically -->
+              </div>
             </div>
           </div>
-          <button id="exitBtn" class="btn btn-secondary btn-small">Exit</button>
+          
+          <button id="exitBtn" class="btn btn-secondary btn-small">
+            Exit
+          </button>
         </div>
 
         <div class="exam-content">
-          <!-- Question Image -->
-          <div
-            id="questionImageContainer"
-            class="question-image-container"
-            style="display: none"
-          >
-            <img
-              id="questionImage"
-              src=""
-              alt="Question Image"
-              class="question-image"
-            />
+          <!-- Loading State -->
+          <div class="loading-container" id="questionLoading" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Loading question...</p>
+          </div>
+          
+          <!-- Top: Question with optional image -->
+          <div class="question-section" id="questionSection">
+            <!-- Question Image (shown on left if exists) -->
+            <div
+              id="questionImageContainer"
+              class="question-image-container"
+              style="display: none"
+            >
+              <img
+                id="questionImage"
+                src=""
+                alt="Traffic scenario for this question"
+                class="question-image"
+              />
+            </div>
+
+            <!-- Question Text -->
+            <div class="question-text-wrapper">
+              <div id="questionText" class="question-text"></div>
+            </div>
           </div>
 
-          <!-- Question Text -->
-          <div id="questionText" class="question-text"></div>
+          <!-- Middle: Answer Options -->
+          <div class="answers-section">
+            <!-- Inline Error Message -->
+            <div class="inline-error hidden" id="inlineError" role="alert">
+              <span aria-hidden="true">⚠️</span>
+              <span id="inlineErrorText">Please select an answer before continuing.</span>
+            </div>
 
-          <!-- Answer Options -->
-          <div id="answersContainer" class="answers-container"></div>
-
-          <!-- Navigation Buttons -->
-          <div class="navigation-buttons">
-            <button id="prevBtn" class="btn btn-secondary">← Previous</button>
-            <button id="nextBtn" class="btn btn-primary">Next →</button>
+            <!-- Answer Options -->
+            <div id="answersContainer" class="answers-container" role="radiogroup" aria-label="Answer options">
+              <!-- Answer buttons will be dynamically generated -->
+            </div>
           </div>
 
-          <!-- Question Status Indicators -->
-          <div class="question-status">
-            <div class="answered-indicator">
-              <span id="answeredCount">0</span> of
-              <span id="totalForStatus">30</span> answered
+          <!-- Bottom: Navigation & Status -->
+          <div class="exam-footer">
+            <div class="navigation-buttons">
+              <button id="prevBtn" class="btn btn-secondary">
+                <span aria-hidden="true">←</span> Previous
+              </button>
+              <button id="nextBtn" class="btn btn-primary">
+                Next <span aria-hidden="true">→</span>
+              </button>
+            </div>
+            <div class="question-status">
+              <div class="answered-indicator">
+                <span aria-hidden="true">✓</span>
+                <span id="answeredCount">0</span>/<span id="totalForStatus">30</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Results Screen -->
-      <div id="resultsScreen" class="screen">
+      <!-- ============================================================
+           RESULTS SCREEN
+           ============================================================ -->
+      <div id="resultsScreen" class="screen" role="main" aria-label="Exam results">
         <div class="results-content">
           <div class="results-header">
             <h2 id="resultTitle"></h2>
-            <div id="resultBadge" class="result-badge"></div>
+            <div id="resultBadge" class="result-badge" aria-hidden="true"></div>
           </div>
 
           <div class="results-stats">
@@ -134,11 +249,11 @@
               <span class="value">30</span>
             </div>
             <div class="result-stat">
-              <span class="label">Correct Answers</span>
+              <span class="label">Correct</span>
               <span class="value correct" id="correctCount">0</span>
             </div>
             <div class="result-stat">
-              <span class="label">Incorrect Answers</span>
+              <span class="label">Incorrect</span>
               <span class="value incorrect" id="incorrectCount">0</span>
             </div>
             <div class="result-stat">
@@ -147,34 +262,55 @@
             </div>
           </div>
 
-          <div class="results-message" id="resultMessage"></div>
+          <div class="result-stat" style="margin-bottom: var(--space-6);">
+            <span class="label">Time Taken</span>
+            <span class="value" id="timeTaken" style="font-size: var(--text-xl);">--:--</span>
+          </div>
+
+          <div class="results-message" id="resultMessage" role="alert"></div>
 
           <div class="review-button-group">
             <button id="reviewBtn" class="btn btn-primary">
-              Review Answers
+              <span aria-hidden="true">📖</span> Review Answers
             </button>
             <button id="restartBtn" class="btn btn-secondary">
-              Start New Exam
+              <span aria-hidden="true">🔄</span> Start New Exam
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Review Screen -->
-      <div id="reviewScreen" class="screen">
+      <!-- ============================================================
+           REVIEW SCREEN
+           ============================================================ -->
+      <div id="reviewScreen" class="screen" role="main" aria-label="Review answers">
         <div class="review-header">
           <div class="progress-section">
             <span class="question-counter">
-              Question <span id="reviewCurrentQuestion">1</span> of
+              Review: Question <span id="reviewCurrentQuestion">1</span> of
               <span id="reviewTotalQuestions">30</span>
             </span>
-            <div class="progress-bar">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
               <div class="progress-fill" id="reviewProgressFill"></div>
             </div>
+            <!-- Review Question Navigation Dots -->
+            <div class="question-dots" id="reviewQuestionDots" role="navigation" aria-label="Review question navigation">
+              <!-- Dots will be generated dynamically -->
+            </div>
           </div>
+          <button id="backToResultsBtn" class="btn btn-secondary btn-small">
+            <span aria-hidden="true">←</span> Back to Results
+          </button>
         </div>
 
         <div class="review-content">
+          <!-- Filter Buttons -->
+          <div class="review-filter-buttons" role="group" aria-label="Filter questions">
+            <button class="filter-btn active" data-filter="all">All (30)</button>
+            <button class="filter-btn" data-filter="incorrect" id="filterIncorrect">Incorrect (0)</button>
+            <button class="filter-btn" data-filter="correct" id="filterCorrect">Correct (0)</button>
+          </div>
+
           <!-- Question Image -->
           <div
             id="reviewQuestionImageContainer"
@@ -184,7 +320,7 @@
             <img
               id="reviewQuestionImage"
               src=""
-              alt="Question Image"
+              alt="Traffic scenario for this question"
               class="question-image"
             />
           </div>
@@ -217,12 +353,126 @@
           <!-- Navigation Buttons -->
           <div class="navigation-buttons">
             <button id="reviewPrevBtn" class="btn btn-secondary">
-              ← Previous
+              <span aria-hidden="true">←</span> Previous
             </button>
-            <button id="reviewNextBtn" class="btn btn-primary">Next →</button>
+            <button id="reviewNextBtn" class="btn btn-primary">
+              Next <span aria-hidden="true">→</span>
+            </button>
           </div>
         </div>
       </div>
+
+      <!-- ============================================================
+           HISTORY DETAIL SCREEN
+           ============================================================ -->
+      <div id="historyDetailScreen" class="screen" role="main" aria-label="Exam history details">
+        <div class="review-header">
+          <div class="progress-section">
+            <span class="question-counter">
+              History: Question <span id="historyCurrentQuestion">1</span> of
+              <span id="historyTotalQuestions">30</span>
+            </span>
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-fill" id="historyProgressFill"></div>
+            </div>
+            <div class="question-dots" id="historyQuestionDots" role="navigation" aria-label="History question navigation">
+              <!-- Dots will be generated dynamically -->
+            </div>
+          </div>
+          <button id="backToHomeBtn" class="btn btn-secondary btn-small">
+            <span aria-hidden="true">←</span> Back to Home
+          </button>
+        </div>
+
+        <div class="review-content">
+          <!-- History Exam Summary -->
+          <div class="history-exam-summary" id="historyExamSummary" style="margin-bottom: var(--space-6); padding: var(--space-4); background: var(--bg-section); border-radius: var(--radius-lg);">
+            <!-- Will be filled dynamically -->
+          </div>
+
+          <!-- Question Image -->
+          <div
+            id="historyQuestionImageContainer"
+            class="question-image-container"
+            style="display: none"
+          >
+            <img
+              id="historyQuestionImage"
+              src=""
+              alt="Traffic scenario for this question"
+              class="question-image"
+            />
+          </div>
+
+          <!-- Question Text -->
+          <div id="historyQuestionText" class="question-text"></div>
+
+          <!-- User's Answer -->
+          <div id="historyUserAnswerSection" class="review-answer-section">
+            <h4>Answer Given</h4>
+            <div id="historyUserAnswer" class="review-answer-display"></div>
+          </div>
+
+          <!-- Correct Answer (if different) -->
+          <div
+            id="historyCorrectAnswerSection"
+            class="review-answer-section"
+            style="display: none"
+          >
+            <h4>Correct Answer</h4>
+            <div id="historyCorrectAnswer" class="review-answer-display"></div>
+          </div>
+
+          <!-- Explanation -->
+          <div id="historyExplanationSection" class="review-explanation-full">
+            <h4>Explanation</h4>
+            <div id="historyExplanation"></div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="navigation-buttons">
+            <button id="historyPrevBtn" class="btn btn-secondary">
+              <span aria-hidden="true">←</span> Previous
+            </button>
+            <button id="historyNextBtn" class="btn btn-primary">
+              Next <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         TOAST CONTAINER
+         ============================================================ -->
+    <div class="toast-container" id="toastContainer" role="region" aria-label="Notifications" aria-live="polite">
+      <!-- Toasts will be dynamically inserted here -->
+    </div>
+
+    <!-- ============================================================
+         CONFIRMATION MODAL
+         ============================================================ -->
+    <div class="modal-backdrop hidden" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-icon" id="modalIcon" aria-hidden="true">⚠️</span>
+          <h3 class="modal-title" id="modalTitle">Confirm Action</h3>
+        </div>
+        <div class="modal-body" id="modalBody">
+          Are you sure you want to proceed?
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
+          <button class="btn btn-danger" id="modalConfirmBtn">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         CONFETTI CONTAINER
+         ============================================================ -->
+    <div class="confetti-container" id="confettiContainer" aria-hidden="true">
+      <!-- Confetti particles will be dynamically inserted here -->
     </div>
 
     <script src="script.js"></script>
